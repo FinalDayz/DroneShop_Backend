@@ -1,5 +1,6 @@
 package com.github.modal;
 
+import io.dropwizard.validation.OneOf;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
@@ -7,36 +8,48 @@ import javax.validation.constraints.NotNull;
 public class Account {
 
     @NotNull
-    private int id;
+    private int accountId;
 
     @NotNull
     @Length(max = 50)
-    private String email;
+    private String accountEmail;
 
     @Length(max = 50)
-    private String password;
+    private String accountPassword;
 
-    public int getId() {
-        return id;
+    @NotNull
+    @OneOf(value = {"GEBRUIKER", "ADMIN"})
+    private String accountRole;
+
+    public int getAccountId() {
+        return accountId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAccountEmail() {
+        return accountEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAccountEmail(String accountEmail) {
+        this.accountEmail = accountEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAccountPassword() {
+        return accountPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAccountPassword(String accountPassword) {
+        this.accountPassword = accountPassword;
+    }
+
+    public String getAccountRole() {
+        return accountRole;
+    }
+
+    public void setAccountRole(String accountRole) {
+        this.accountRole = accountRole;
     }
 }

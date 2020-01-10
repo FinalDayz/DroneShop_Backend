@@ -1,9 +1,16 @@
 package com.github.resources;
 
+import com.github.modal.Account;
 import com.github.service.AccountService;
+import com.github.service.InvalidAccountException;
+import com.github.service.Service;
+import jdk.net.SocketFlow;
 
 import javax.inject.Singleton;
+import javax.management.InstanceAlreadyExistsException;
+import javax.validation.Valid;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -12,18 +19,29 @@ import javax.ws.rs.core.Response;
 @Singleton
 @Path("account")
 @Produces(MediaType.APPLICATION_JSON)
-public class AccountResource {
+public class AccountResource extends Resource<AccountService> {
 
-    private final AccountService accountService;
-
-    public AccountResource(AccountService accountService) {
-        this.accountService = accountService;
+    public AccountResource(AccountService service) {
+        super(service);
     }
 
     @GET
     @Path("/validate")
-    public Response validate() {
-        return Response.ok("").build();
+    public Response validate(@Valid Account account) {
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("/createAccount")
+    public Response createAccount(Account account) {
+        try {
+            service.createAccount(account);
+        } catch (InstanceAlreadyExistsException e) {
+            return Response.serverError().entity("Email is already in use").build();
+        } catch (InvalidAccountException e) {
+            return Response.serverError().entity(e.getMessage()).build();
+        }
+        return Response.status(Response.Status.CREATED).build();
     }
 
 }
