@@ -1,10 +1,10 @@
 package com.github.service;
 
-public class InvalidAccountException extends Throwable {
+public class InvalidInputException extends Throwable {
 
     private String message;
 
-    public InvalidAccountException(String message) {
+    public InvalidInputException(String message) {
         this.message = message;
     }
     public String getMessage() {

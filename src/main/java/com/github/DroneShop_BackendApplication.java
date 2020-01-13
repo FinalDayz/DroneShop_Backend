@@ -8,8 +8,12 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+
+import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import org.skife.jdbi.v2.DBI;
+
+import java.util.EnumSet;
 
 public class DroneShop_BackendApplication extends Application<DroneShop_BackendConfiguration> {
 
@@ -36,6 +40,9 @@ public class DroneShop_BackendApplication extends Application<DroneShop_BackendC
         cors.setInitParameter("allowedOrigins", "*");
         cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+
+
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(configuration, environment);
         environment.jersey().packages("org.example.resource");
     }

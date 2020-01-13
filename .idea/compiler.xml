@@ -9,8 +9,5 @@
         <module name="DroneShop_Backend" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="DroneShop_Backend" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
