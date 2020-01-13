@@ -2,9 +2,7 @@ package com.github.resources;
 
 import com.github.modal.Account;
 import com.github.service.AccountService;
-import com.github.service.InvalidAccountException;
-import com.github.service.Service;
-import jdk.net.SocketFlow;
+import com.github.service.InvalidInputException;
 
 import javax.inject.Singleton;
 import javax.management.InstanceAlreadyExistsException;
@@ -38,7 +36,7 @@ public class AccountResource extends Resource<AccountService> {
             service.createAccount(account);
         } catch (InstanceAlreadyExistsException e) {
             return Response.serverError().entity("Email is already in use").build();
-        } catch (InvalidAccountException e) {
+        } catch (InvalidInputException e) {
             return Response.serverError().entity(e.getMessage()).build();
         }
         return Response.status(Response.Status.CREATED).build();
