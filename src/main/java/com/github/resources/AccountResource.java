@@ -23,7 +23,7 @@ public class AccountResource extends Resource<AccountService> {
         super(service);
     }
 
-    @GET
+    @POST
     @Path("/validate")
     public Response validate(@Valid Account account) {
         return Response.ok().build();

@@ -55,9 +55,6 @@ public class DroneShop_BackendApplication extends Application<DroneShop_BackendC
         resourceFactory.register(ProductOrderResource.class);
         resourceFactory.register(OrderResource.class);
 
-
-
-
 //        env.jersey().register(new AccountResource());
     }
 }
