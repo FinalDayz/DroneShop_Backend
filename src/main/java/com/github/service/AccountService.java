@@ -2,7 +2,7 @@ package com.github.service;
 
 import com.github.modal.Account;
 import com.github.persistence.AccountDAO;
-import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.commons.validator.EmailValidator;
 
 import javax.management.InstanceAlreadyExistsException;
 import java.util.List;

@@ -1,8 +1,6 @@
 package com.github;
 
-import com.github.resources.AccountResource;
-import com.github.resources.ProductResource;
-import com.github.resources.ResourceFactory;
+import com.github.resources.*;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -49,11 +47,13 @@ public class DroneShop_BackendApplication extends Application<DroneShop_BackendC
 
     private void registerInjections(DroneShop_BackendConfiguration config, Environment env) {
         final DBIFactory factory = new DBIFactory();
-        final DBI jdbi = factory.build(env, config.getDataSourceFactory(), "postgresql");
+        final DBI jdbi = factory.build(env, config.getDataSourceFactory(), "mysql");
 
         ResourceFactory resourceFactory = new ResourceFactory(jdbi, env.jersey());
         resourceFactory.register(AccountResource.class);
         resourceFactory.register(ProductResource.class);
+        resourceFactory.register(ProductOrderResource.class);
+        resourceFactory.register(OrderResource.class);
 
 
 
