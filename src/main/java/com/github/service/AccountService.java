@@ -2,6 +2,7 @@ package com.github.service;
 
 import com.github.modal.Account;
 import com.github.persistence.AccountDAO;
+import com.github.security.JWTUtils;
 import org.apache.commons.validator.EmailValidator;
 
 import javax.management.InstanceAlreadyExistsException;
@@ -48,6 +49,14 @@ public class AccountService extends Service<AccountDAO> {
         if(account.getAccountPassword().length() <= 1) {
             throw new InvalidInputException("Password must be at least 2 characters long");
         }
+    }
 
+    public String validate(Account account) {
+        Account accountReturned = this.DAO.validateAccount(account);
+        if(accountReturned == null) {
+            return null;
+        }
+
+        return JWTUtils.creatJWT(accountReturned);
     }
 }

@@ -1,6 +1,7 @@
 package com.github.resources;
 
 import com.github.modal.Account;
+import com.github.security.Secured;
 import com.github.service.AccountService;
 import com.github.service.InvalidInputException;
 
@@ -15,8 +16,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Singleton
-@Path("account")
+@Path("/account")
 @Produces(MediaType.APPLICATION_JSON)
+//@Secured
 public class AccountResource extends Resource<AccountService> {
 
     public AccountResource(AccountService service) {
@@ -25,8 +27,13 @@ public class AccountResource extends Resource<AccountService> {
 
     @POST
     @Path("/validate")
-    public Response validate(@Valid Account account) {
-        return Response.ok().build();
+    public Response validate(Account account) {
+        System.out.println(account);
+        String JWT = this.service.validate(account);
+        if(JWT == null) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+        return Response.ok(JWT).build();
     }
 
     @POST

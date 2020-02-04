@@ -1,7 +1,14 @@
 package com.github;
 
+import com.github.modal.Account;
 import com.github.resources.*;
+import com.github.security.AuthFilter;
+import com.github.security.JWTAuthenticator;
+import com.github.security.JWTAuthorizer;
+import com.github.service.JsonWebTokenService;
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -9,6 +16,8 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.skife.jdbi.v2.DBI;
 
 import java.util.EnumSet;
@@ -39,6 +48,14 @@ public class DroneShop_BackendApplication extends Application<DroneShop_BackendC
         cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 
+        // register authentication/authorization
+        environment.jersey().register(new AuthDynamicFeature(
+                new OAuthCredentialAuthFilter.Builder<Account>()
+                        .setAuthenticator(new JWTAuthenticator(new JsonWebTokenService()))
+                        .setAuthorizer(new JWTAuthorizer())
+                        .setPrefix("Bearer")
+                        .buildAuthFilter()));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
 
         cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         registerInjections(configuration, environment);
@@ -55,6 +72,7 @@ public class DroneShop_BackendApplication extends Application<DroneShop_BackendC
         resourceFactory.register(ProductOrderResource.class);
         resourceFactory.register(OrderResource.class);
 
-//        env.jersey().register(new AccountResource());
+        env.jersey().register(new AuthFilter(config));
+
     }
 }

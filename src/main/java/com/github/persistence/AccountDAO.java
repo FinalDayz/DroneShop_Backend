@@ -26,4 +26,8 @@ public interface AccountDAO {
 
     @SqlQuery("SELECT count(*) FROM account WHERE accountEmail = :email")
     int selectAccountWithEmail(@Bind("email") String accountEmail);
+
+    @SqlQuery("SELECT * FROM account WHERE accountEmail = :accountEmail AND accountPassword = :accountPassword LIMIT 1")
+    @Mapper(AccountMapper.class)
+    Account validateAccount(@BindBean Account account);
 }

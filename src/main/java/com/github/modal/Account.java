@@ -4,8 +4,9 @@ import io.dropwizard.validation.OneOf;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 
-public class Account {
+public class Account implements Principal {
 
     @NotNull
     private int accountId;
@@ -51,5 +52,10 @@ public class Account {
 
     public void setAccountRole(String accountRole) {
         this.accountRole = accountRole;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }
