@@ -1,6 +1,7 @@
 package com.github.resources;
 
 import com.github.modal.Order;
+import com.github.security.Secured;
 import com.github.service.InvalidInputException;
 import com.github.service.OrderService;
 
@@ -10,7 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
+@Secured
 @Singleton
 @Path("/order")
 @Produces(MediaType.APPLICATION_JSON)

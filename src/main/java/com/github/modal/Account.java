@@ -22,6 +22,16 @@ public class Account implements Principal {
     @OneOf(value = {"GEBRUIKER", "ADMIN"})
     private String accountRole;
 
+    private String JWT;
+
+    public String getJWT() {
+        return JWT;
+    }
+
+    public void setJWT(String JWT) {
+        this.JWT = JWT;
+    }
+
     public int getAccountId() {
         return accountId;
     }

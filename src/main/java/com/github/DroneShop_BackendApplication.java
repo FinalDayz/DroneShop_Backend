@@ -45,8 +45,10 @@ public class DroneShop_BackendApplication extends Application<DroneShop_BackendC
                 environment.servlets().addFilter("CORS", CrossOriginFilter.class);
         // Configure CORS parameters
         cors.setInitParameter("allowedOrigins", "*");
-        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedHeaders", "*");
         cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+        cors.setInitParameter("Access-Control-Allow-Origin", "*");
+        cors.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
 
         // register authentication/authorization
         environment.jersey().register(new AuthDynamicFeature(

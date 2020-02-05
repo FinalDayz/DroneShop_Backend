@@ -1,5 +1,6 @@
 package com.github.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.github.modal.Account;
 import com.github.persistence.AccountDAO;
 import com.github.security.JWTUtils;
@@ -51,12 +52,29 @@ public class AccountService extends Service<AccountDAO> {
         }
     }
 
-    public String validate(Account account) {
+    public Account validate(Account account) {
         Account accountReturned = this.DAO.validateAccount(account);
+
         if(accountReturned == null) {
             return null;
         }
 
-        return JWTUtils.creatJWT(accountReturned);
+        accountReturned.setJWT(JWTUtils.creatJWT(accountReturned));
+
+        return accountReturned;
+    }
+
+    public Account validateJWT(String JWT) {
+        if(!JWTUtils.isValid(JWT))
+            return null;
+
+        DecodedJWT decodedJWT = JWTUtils.decodeJWT(JWT);
+
+        Account account = new Account();
+        account.setJWT(JWT);
+        account.setAccountEmail(decodedJWT.getClaim("name").asString());
+        account.setAccountRole(decodedJWT.getClaim("role").asString());
+
+        return account;
     }
 }

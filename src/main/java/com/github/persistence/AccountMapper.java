@@ -13,6 +13,7 @@ public class AccountMapper implements ResultSetMapper<Account> {
     @Override
     public Account map(int index, ResultSet resultSet, StatementContext statementContext) throws SQLException {
         final ResultSetMetaData meta = resultSet.getMetaData();
+        System.out.println("MAPPP");
         Account account = new Account();
 
         for(int i = 1; i <= meta.getColumnCount(); i++) {
