@@ -23,7 +23,6 @@ public class ProductMapper implements ResultSetMapper<Product> {
     }
 
     private void setProperty(Product product, String propertyName, Object propertyValue) {
-        System.out.println(propertyValue);
         switch (propertyName) {
             case "productId":
                 product.setProductId((int) propertyValue);

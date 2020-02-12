@@ -37,7 +37,6 @@ public class AccountResource extends Resource<AccountService> {
     @GET
     @Path("/validateJWT/{JWT}")
     public Response validateJWT(@PathParam("JWT") String JWT) {
-        System.out.println(JWT);
         Account returnedAccount = this.service.validateJWT(JWT);
         if(returnedAccount == null) {
             return Response.status(Response.Status.UNAUTHORIZED).build();

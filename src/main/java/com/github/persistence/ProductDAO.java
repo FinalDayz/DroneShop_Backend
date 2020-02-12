@@ -8,6 +8,7 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import javax.ws.rs.Produces;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ProductDAO {
@@ -16,13 +17,21 @@ public interface ProductDAO {
     @SqlQuery("SELECT * FROM product")
     List<Product> selectAllProducts();
 
-    @SqlUpdate("INSERT INTO product VALUES (null, :productName, :productDesc, :productPrice, :productImagePath)")
+    @SqlUpdate("INSERT INTO product " +
+            "VALUES " +
+            "(null, :productName, :productDesc, :productPrice, :productImagePath)")
     void insertProduct(@BindBean Product product);
 
-    @SqlUpdate("UPDATE product SET productName = :productName, productDesc = :productDesc, productPrice = :productPrice, productImagePath = :productImagePath")
+    @SqlUpdate("UPDATE product " +
+            "SET productName = :productName, " +
+            "productDesc = :productDesc, " +
+            "productPrice = :productPrice, " +
+            "productImagePath = :productImagePath " +
+            "WHERE productId = :productId")
     void updateProduct(@BindBean Product product);
 
-    @SqlUpdate("DELETE FROM product WHERE productId = :productId")
+    @SqlUpdate("DELETE FROM product " +
+            "WHERE productId = :productId")
     void deleteProduct(@Bind int productId);
 
 }

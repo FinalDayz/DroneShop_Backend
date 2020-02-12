@@ -18,7 +18,6 @@ public class AccountMapper implements ResultSetMapper<Account> {
 
         for(int i = 1; i <= meta.getColumnCount(); i++) {
             String columnName = meta.getColumnName(i);
-            System.out.println(columnName);
             setProperty(account, columnName, resultSet.getObject(i));
         }
         return account;
