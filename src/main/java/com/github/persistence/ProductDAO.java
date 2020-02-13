@@ -32,6 +32,6 @@ public interface ProductDAO {
 
     @SqlUpdate("DELETE FROM product " +
             "WHERE productId = :productId")
-    void deleteProduct(@Bind int productId);
+    void deleteProduct(@Bind("productId") int productId);
 
 }

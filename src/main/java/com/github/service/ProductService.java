@@ -18,12 +18,17 @@ public class ProductService extends Service<ProductDAO> {
     }
 
     public Response updateProduct(Product product) {
-        try {
-            this.DAO.updateProduct(product);
-        }catch(Exception e) {
-            e.printStackTrace();
-            return Response.status(HttpStatus.INTERNAL_SERVER_ERROR_500).build();
-        }
+        this.DAO.updateProduct(product);
+        return Response.ok().build();
+    }
+
+    public Response createProduct(Product product) {
+        this.DAO.insertProduct(product);
+        return Response.ok().build();
+    }
+
+    public Response deleteProduct(int productId) {
+        this.DAO.deleteProduct(productId);
         return Response.ok().build();
     }
 }

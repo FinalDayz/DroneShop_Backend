@@ -6,10 +6,7 @@ import com.github.service.ProductService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Singleton;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -33,5 +30,19 @@ public class ProductResource extends Resource<ProductService> {
     @RolesAllowed({"Admin"})
     public Response updateProduct(Product product) {
         return this.service.updateProduct(product);
+    }
+
+    @PUT
+    @Path("/create")
+    @RolesAllowed({"Admin"})
+    public Response createProduct(Product product) {
+        return this.service.createProduct(product);
+    }
+
+    @DELETE
+    @RolesAllowed({"Admin"})
+    @Path("delete/{productId}")
+    public Response deleteProduct(@PathParam("productId") int productId) {
+        return this.service.deleteProduct(productId);
     }
 }

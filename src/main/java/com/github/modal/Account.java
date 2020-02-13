@@ -19,7 +19,7 @@ public class Account implements Principal {
     private String accountPassword;
 
     @NotNull
-    @OneOf(value = {"GEBRUIKER", "ADMIN"})
+    @OneOf(value = {"USER", "ADMIN"})
     private String accountRole;
 
     private String JWT;

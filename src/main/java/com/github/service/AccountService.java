@@ -27,8 +27,8 @@ public class AccountService extends Service<AccountDAO> {
             throw new InstanceAlreadyExistsException();
         }
 
-        account.setAccountRole("GEBRUIKER");
-
+        account.setAccountRole("USER");
+        System.out.println("INSERT INTO account VALUES (null, '"+account.getAccountEmail()+"', '"+account.getAccountPassword()+"', '"+account.getAccountRole()+"')");
         DAO.insertAccount(account);
     }
 

@@ -15,7 +15,7 @@ public interface AccountDAO {
     @SqlQuery("SELECT accountId, accountEmail, accountRole FROM account")
     List<Account> selectAllAccounts();
 
-    @SqlUpdate("INSERT INTO account VALUES (null, :accountEmail, :accountPassword, :accountRole)")
+    @SqlUpdate("INSERT INTO `account` (`accountEmail`, `accountPassword`, `accountRole`) VALUES (:accountEmail, :accountPassword, :accountRole)")
     void insertAccount(@BindBean Account account);
 
     @SqlUpdate("UPDATE account SET accountEmail = :accountEmail, accountRole = :accountRole")

@@ -1,6 +1,7 @@
 package com.github.resources;
 
 import com.github.modal.Order;
+import com.github.modal.UserOrders;
 import com.github.security.Secured;
 import com.github.service.InvalidInputException;
 import com.github.service.OrderService;
@@ -11,6 +12,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
+
 @Secured
 @Singleton
 @Path("/order")
@@ -22,13 +25,7 @@ public class OrderResource extends Resource<OrderService> {
 
     @POST
     @Path("/createOrder")
-    public Response addOrder(Order order) {
-        try {
-            service.addOrder(order);
-        } catch (InvalidInputException e) {
-            return Response.serverError().entity(e.getMessage()).build();
-        }
-
-        return Response.status(Response.Status.CREATED).build();
+    public Response addOrder(UserOrders order) {
+        return service.processOrder(order);
     }
 }
